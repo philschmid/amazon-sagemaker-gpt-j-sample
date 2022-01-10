@@ -2,6 +2,7 @@ import os
 import shutil
 import tarfile
 import argparse
+import boto3
 import torch
 from transformers import AutoTokenizer, GPTJForCausalLM
 
@@ -9,9 +10,6 @@ from transformers import AutoTokenizer, GPTJForCausalLM
 def compress(tar_dir=None, output_file="model.tar.gz"):
     with tarfile.open(output_file, "w:gz") as tar:
         tar.add(tar_dir, arcname=os.path.sep)
-
-
-import boto3
 
 
 def upload_file_to_s3(bucket_name=None, file_name="model.tar.gz", key_prefix=""):
