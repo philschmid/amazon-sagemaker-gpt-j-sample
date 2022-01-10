@@ -5,7 +5,8 @@ This repository contains instruction and code on how to run `GPT-J` for inferenc
 
 ## Getting Started
 
-Create `model.tar.gz`. ´compress` & `upload_file_to_s3` methods can be found in the [notebook](notebook-sample.ipynb)
+Create `model.tar.gz` using the `convert_gpt.py` script.
+
 
 ```python
 from sagemaker.huggingface import HuggingFaceModel
