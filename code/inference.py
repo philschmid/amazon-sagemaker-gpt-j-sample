@@ -14,6 +14,8 @@ def model_fn(model_dir):
     else:
         device = -1
 
-    generation = pipeline("text-generation", model=model, tokenizer=tokenizer, device=device)
+    generation = pipeline(
+        "text-generation", model=model, tokenizer=tokenizer, device=device
+    )
 
-    return generation
+    return

@@ -30,7 +30,9 @@ def convert(bucket_name="hf-sagemaker-inference"):
 
     # load fp 16 model
     print("Loading model from `EleutherAI/gpt-j-6B`")
-    model = GPTJForCausalLM.from_pretrained("EleutherAI/gpt-j-6B", revision="float16", torch_dtype=torch.float16)
+    model = GPTJForCausalLM.from_pretrained(
+        "EleutherAI/gpt-j-6B", revision="float16", torch_dtype=torch.float16
+    )
     print("saving model with `torch.save`")
     torch.save(model, os.path.join(model_save_dir, "gptj.pt"))
 
@@ -47,22 +49,29 @@ def convert(bucket_name="hf-sagemaker-inference"):
     compress(model_save_dir)
 
     # upload to s3
-    print(f"uploading `model.tar.gz` archive to s3://{bucket_name}/{key_prefix}/model.tar.gz")
+    print(
+        f"uploading `model.tar.gz` archive to s3://{bucket_name}/{key_prefix}/model.tar.gz"
+    )
     model_uri = upload_file_to_s3(bucket_name=bucket_name, key_prefix=key_prefix)
     print(f"Successfully uploaded to {model_uri}")
+
+    return model_uri
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--bucket_name", type=str, default=None)
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
     # parse args
     args = parse_args()
 
-    if args.bucket_name:
-        raise ValueError("please provide a valid `bucket_name`, when running `python convert_gptj.py --bucket_name` ")
+    if not args.bucket_name:
+        raise ValueError(
+            "please provide a valid `bucket_name`, when running `python convert_gptj.py --bucket_name` "
+        )
 
     # read config file
     convert(args.bucket_name)
