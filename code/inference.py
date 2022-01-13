@@ -18,4 +18,4 @@ def model_fn(model_dir):
         "text-generation", model=model, tokenizer=tokenizer, device=device
     )
 
-    return
+    return generation
