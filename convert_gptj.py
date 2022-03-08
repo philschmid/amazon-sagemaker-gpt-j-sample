@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import tarfile
 import argparse
@@ -54,7 +55,8 @@ def convert(bucket_name="hf-sagemaker-inference"):
     )
     model_uri = upload_file_to_s3(bucket_name=bucket_name, key_prefix=key_prefix)
     print(f"Successfully uploaded to {model_uri}")
-
+    
+    sys.stdout.write(model_uri)
     return model_uri
 
 
