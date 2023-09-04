@@ -30,7 +30,7 @@ def convert(bucket_name="hf-sagemaker-inference"):
     os.makedirs(dst_inference_script, exist_ok=True)
 
     # load fp 16 model
-    print("Loading model from `EleutherAI/gpt-j-6B`")
+    print("Loading model from `EleutherAI/gpt-j-6b`")
     model = GPTJForCausalLM.from_pretrained(
         "EleutherAI/gpt-j-6B", revision="float16", torch_dtype=torch.float16
     )
@@ -38,7 +38,7 @@ def convert(bucket_name="hf-sagemaker-inference"):
     torch.save(model, os.path.join(model_save_dir, "gptj.pt"))
 
     print("saving tokenizer")
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6b")
     tokenizer.save_pretrained(model_save_dir)
 
     # copy inference script
